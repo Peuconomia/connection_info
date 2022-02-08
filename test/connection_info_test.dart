@@ -8,6 +8,7 @@ void main() {
       final controller = ConnectionController(
         serverUrl: 'http://asdom',
         repeatInterval: const Duration(seconds: 1),
+        showErrorInDebugMode: true,
       );
 
       expect(
