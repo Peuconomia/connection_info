@@ -28,8 +28,6 @@ class ConnectionController {
   }) {
     _controller = StreamController<ConnectionState>.broadcast(
       onListen: () {
-        ConnectionState _currentState = ConnectionState();
-
         _timer ??= Timer.periodic(repeatInterval, (timer) async {
           try {
             var lookup = await InternetAddress.lookup(serverUrl);
@@ -38,10 +36,11 @@ class ConnectionController {
             _setCurrentState(ConnectionState(isConnected: true));
           } catch (error, stacktrace) {
             _setCurrentState(ConnectionState(isConnected: false));
-
-            if (!kReleaseMode && showErrorInDebugMode) {
-              print(error);
-              print(stacktrace);
+            if (showErrorInDebugMode) {
+              if (kDebugMode) {
+                print(error);
+                print(stacktrace);
+              }
             }
           }
         });
