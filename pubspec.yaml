@@ -1,6 +1,6 @@
 name: connection_info
 description: Project to check for internet connectivity with dart.
-version: 0.0.2-rc
+version: 1.0.0-rc
 homepage: https://github.com/Peuconomia/connection_info
 
 environment:
