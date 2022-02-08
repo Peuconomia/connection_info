@@ -30,7 +30,7 @@ class ConnectionController {
       onListen: () {
         _timer ??= Timer.periodic(repeatInterval, (timer) async {
           try {
-            var lookupResult = await InternetAddress.lookup(serverUrl);
+            final lookupResult = await InternetAddress.lookup(serverUrl);
 
             if (lookupResult.isNotEmpty &&
                 lookupResult[0].rawAddress.isNotEmpty) {
@@ -53,10 +53,34 @@ class ConnectionController {
     );
   }
 
+  Future<ConnectionState> isConnected() async {
+    try {
+      final lookupResult = await InternetAddress.lookup(serverUrl);
+
+      if (lookupResult.isNotEmpty && lookupResult[0].rawAddress.isNotEmpty) {
+        _setCurrentState(ConnectionState(isConnected: true));
+      }
+    } catch (error, stacktrace) {
+      if (showErrorInDebugMode) {
+        if (kDebugMode) {
+          print(error);
+          print(stacktrace);
+        }
+        _setCurrentState(ConnectionState(isConnected: false));
+      }
+    }
+    return _previousState!;
+  }
+
   void _setCurrentState(ConnectionState newState) {
     if (_previousState == null || newState != _previousState) {
       _previousState = newState;
-      _controller.add(newState);
+      print(_previousState);
+      if (_controller.hasListener &&
+          !_controller.isClosed &&
+          !_controller.isPaused) {
+        _controller.add(newState);
+      }
     }
   }
 }
