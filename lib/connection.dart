@@ -20,7 +20,7 @@ class ConnectionController {
   ConnectionState? _previousState;
 
   ConnectionController({
-    this.serverUrl = 'https://google.com',
+    this.serverUrl = 'google.com',
     this.repeatInterval = const Duration(
       seconds: 5,
     ),
@@ -30,10 +30,12 @@ class ConnectionController {
       onListen: () {
         _timer ??= Timer.periodic(repeatInterval, (timer) async {
           try {
-            var lookup = await InternetAddress.lookup(serverUrl);
+            var lookupResult = await InternetAddress.lookup(serverUrl);
 
-            print(lookup);
-            _setCurrentState(ConnectionState(isConnected: true));
+            if (lookupResult.isNotEmpty &&
+                lookupResult[0].rawAddress.isNotEmpty) {
+              _setCurrentState(ConnectionState(isConnected: true));
+            }
           } catch (error, stacktrace) {
             _setCurrentState(ConnectionState(isConnected: false));
             if (showErrorInDebugMode) {
