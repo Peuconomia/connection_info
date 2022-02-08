@@ -1,3 +1,6 @@
+## 1.0.0
+* Added better description in pubspec.yaml file.
+
 ## 1.0.0-rc
 * Updated Readme.md
 * Added documentation to source code.

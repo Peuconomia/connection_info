@@ -1,6 +1,8 @@
 name: connection_info
-description: Project to check for internet connectivity with dart.
-version: 1.0.0-rc
+description: The library helps to check for internet conenctivity in all platforms supported by
+  Flutter. It provides a stream to continuously listen for internet conenction state and a future to
+  check for internet connection.
+version: 1.0.0
 homepage: https://github.com/Peuconomia/connection_info
 
 environment:
